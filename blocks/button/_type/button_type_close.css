@@ -1,0 +1,23 @@
+.button_type_close {
+  cursor: pointer;
+  border: none;
+  background: none;
+  top: -11%;
+  right: -9%;
+  padding: 0;
+}
+
+.button_type_close:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 700px) {
+  .button_type_close {
+    top: -11%;
+    right: -2%;
+  }
+
+  .button_type_close:first-child {
+    transform: scale(0.625);
+  }
+}
