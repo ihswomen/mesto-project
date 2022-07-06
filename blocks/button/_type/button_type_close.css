@@ -1,0 +1,25 @@
+.button_type_close {
+  position: absolute;
+  cursor: pointer;
+  border: none;
+  background-color: none;
+  top: -11%;
+  right: -9%;
+  padding: 0;
+  background: url(../../../images/button-close.svg) no-repeat center;
+  width: 32px;
+  height: 32px;
+}
+
+.button_type_close:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 700px) {
+  .button_type_close {
+    top: -11%;
+    right: -2%;
+    width: 20px;
+    height: 20px;
+  }
+}
