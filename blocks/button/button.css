@@ -1,8 +1,0 @@
-.button {
-  cursor: pointer;
-  background-color: var(--black);
-}
-
-.button:hover {
-  opacity: 0.8;
-}
