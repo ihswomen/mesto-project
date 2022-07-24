@@ -15,6 +15,7 @@
     <title>Mesto</title>
     <link rel="stylesheet" href="pages/index.css" />
   </head>
+
   <body class="page">
     <header class="header">
       <img class="header__logo" src="./images/logo.svg" alt="Логотип Место" />
@@ -40,80 +41,10 @@
       </section>
 
       <section class="elements">
-        <ul class="elements__list">
-          <div class="elements__element">
-            <img
-              class="elements__image"
-              src="./images/karachaevsk.jpg"
-              alt="Фотография Карачаевска"
-            />
-            <div class="elements__mask">
-              <h2 class="elements__text">Карачаевск</h2>
-              <button
-                class="elements__like elements__like_active"
-                type="button"
-              ></button>
-            </div>
-          </div>
-          <div class="elements__element">
-            <img
-              class="elements__image"
-              src="./images/elbrus.png"
-              alt="Гора Эльбрус"
-            />
-            <div class="elements__mask">
-              <h2 class="elements__text">Гора Эльбрус</h2>
-              <button class="elements__like" type="button"></button>
-            </div>
-          </div>
-          <div class="elements__element">
-            <img
-              class="elements__image"
-              src="./images/dombai.png"
-              alt="Домбай"
-            />
-            <div class="elements__mask">
-              <h2 class="elements__text">Домбай</h2>
-              <button class="elements__like" type="button"></button>
-            </div>
-          </div>
-          <div class="elements__element">
-            <img
-              class="elements__image"
-              src="./images/karachaevsk.jpg"
-              alt="Фотография Карачаевска"
-            />
-            <div class="elements__mask">
-              <h2 class="elements__text">Карачаевск</h2>
-              <button class="elements__like" type="button"></button>
-            </div>
-          </div>
-          <div class="elements__element">
-            <img
-              class="elements__image"
-              src="./images/elbrus.png"
-              alt="Гора Эльбрус"
-            />
-            <div class="elements__mask">
-              <h2 class="elements__text">Гора Эльбрус</h2>
-              <button class="elements__like" type="button"></button>
-            </div>
-          </div>
-          <div class="elements__element">
-            <img
-              class="elements__image"
-              src="./images/dombai.png"
-              alt="Карачаево-Черкесия"
-            />
-            <div class="elements__mask">
-              <h2 class="elements__text">Карачаево-Черкесия</h2>
-              <button class="elements__like" type="button"></button>
-            </div>
-          </div>
-        </ul>
+        <ul class="elements__list"></ul>
       </section>
 
-      <section class="popup popup_opened">
+      <section class="popup" id="popup-profile">
         <div class="popup__container">
           <button class="button button_type_close" type="button"></button>
           <h2 class="popup__heading">Редактировать профиль</h2>
@@ -138,10 +69,59 @@
           </form>
         </div>
       </section>
+
+      <section class="popup" id="popup-card">
+        <div class="popup__container">
+          <button class="button button_type_close" type="button"></button>
+          <h2 class="popup__heading">Добавить карточку</h2>
+          <form name="popup" class="popup__form">
+            <input
+              class="popup__item popup__item_el_name"
+              type="text"
+              name="title"
+              value=""
+              placeholder="Название места"
+            />
+            <input
+              class="popup__item popup__item_el_profession"
+              type="text"
+              name="address"
+              value=""
+              placeholder="Ссылка на картинку"
+            />
+            <button class="button button_type_save" type="submit">
+              Сохранить
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section class="popup popup_opacity_less" id="popup-image">
+        <figure class="popup__image popup_opacity_none">
+          <button
+            class="button button_type_close button_position_closer"
+            type="button"
+          ></button>
+          <img class="popup__picture" src="" alt="Место для путешествия" />
+          <figcaption class="popup__caption"></figcaption>
+        </figure>
+      </section>
+
+      <template id="card">
+        <div class="elements__element">
+          <img class="elements__image" src="" alt="Фотография Места" />
+          <button class="elements__delete" type="button"></button>
+          <div class="elements__mask">
+            <h2 class="elements__text"></h2>
+            <button class="elements__like" type="button"></button>
+          </div>
+        </div>
+      </template>
     </main>
 
     <footer class="footer">
       <p class="footer__paragraph">&copy; 2022 Mesto Russia</p>
     </footer>
+    <script src="script.js"></script>
   </body>
 </html>
