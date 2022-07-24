@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Сайт о любителе путешествий и местах для путешествий по России"
+    />
+    <meta
+      name="keywords"
+      content="Россия, путешествие, отдых, достопримечательности"
+    />
+    <meta name="author" content="Nadegda Ikhsanova" />
+    <title>Mesto</title>
+    <link rel="stylesheet" href="pages/index.css" />
+  </head>
+
+  <body class="page">
+    <header class="header">
+      <img class="header__logo" src="./images/logo.svg" alt="Логотип Место" />
+    </header>
+
+    <main class="content">
+      <section class="profile">
+        <div class="profile__container">
+          <img
+            class="profile__avatar"
+            src="./images/avatar.jpg"
+            alt="Жак-Ив Кусто"
+          />
+          <div class="profile__info">
+            <div class="profile__box">
+              <h1 class="profile__name">Жак-Ив Кусто</h1>
+              <button class="button button_type_edit" type="button"></button>
+            </div>
+            <p class="profile__profession">Исследователь Океана</p>
+          </div>
+        </div>
+        <button class="button button_type_add" type="button"></button>
+      </section>
+
+      <section class="elements">
+        <ul class="elements__list"></ul>
+      </section>
+
+      <section class="popup" id="popup-profile">
+        <div class="popup__container">
+          <button class="button button_type_close" type="button"></button>
+          <h2 class="popup__heading">Редактировать профиль</h2>
+          <form name="popup" class="popup__form">
+            <input
+              class="popup__item popup__item_el_name"
+              type="text"
+              name="firstname"
+              value="Жак-Ив Кусто"
+              placeholder="Ваше имя"
+            />
+            <input
+              class="popup__item popup__item_el_profession"
+              type="text"
+              name="profession"
+              value="Исследователь океана"
+              placeholder="Чем вы занимаетесь?"
+            />
+            <button class="button button_type_save" type="submit">
+              Сохранить
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section class="popup" id="popup-card">
+        <div class="popup__container">
+          <button class="button button_type_close" type="button"></button>
+          <h2 class="popup__heading">Добавить карточку</h2>
+          <form name="popup" class="popup__form">
+            <input
+              class="popup__item popup__item_el_name"
+              type="text"
+              name="title"
+              value=""
+              placeholder="Название места"
+            />
+            <input
+              class="popup__item popup__item_el_profession"
+              type="text"
+              name="address"
+              value=""
+              placeholder="Ссылка на картинку"
+            />
+            <button class="button button_type_save" type="submit">
+              Сохранить
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section class="popup popup_opacity_less" id="popup-image">
+        <figure class="popup__image popup_opacity_none">
+          <button
+            class="button button_type_close button_position_closer"
+            type="button"
+          ></button>
+          <img class="popup__picture" src="" alt="Место для путешествия" />
+          <figcaption class="popup__caption"></figcaption>
+        </figure>
+      </section>
+
+      <template id="card">
+        <div class="elements__element">
+          <img class="elements__image" src="" alt="Фотография Места" />
+          <button class="elements__delete" type="button"></button>
+          <div class="elements__mask">
+            <h2 class="elements__text"></h2>
+            <button class="elements__like" type="button"></button>
+          </div>
+        </div>
+      </template>
+    </main>
+
+    <footer class="footer">
+      <p class="footer__paragraph">&copy; 2022 Mesto Russia</p>
+    </footer>
+    <script src="./script.js" type="module"></script>
+  </body>
+</html>
