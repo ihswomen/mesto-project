@@ -24,11 +24,13 @@
     <main class="content">
       <section class="profile">
         <div class="profile__container">
-          <img
-            class="profile__avatar"
-            src="./images/avatar.jpg"
-            alt="Жак-Ив Кусто"
-          />
+          <div class="profile__avatar">
+            <img
+              class="profile__photo"
+              src="./images/avatar.jpg"
+              alt="Жак-Ив Кусто"
+            />
+          </div>
           <div class="profile__info">
             <div class="profile__box">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -48,24 +50,75 @@
         <div class="popup__container">
           <button class="button button_type_close" type="button"></button>
           <h2 class="popup__heading">Редактировать профиль</h2>
-          <form name="popup" class="popup__form">
-            <input
-              class="popup__item popup__item_el_name"
-              type="text"
-              name="firstname"
-              value="Жак-Ив Кусто"
-              placeholder="Ваше имя"
-            />
-            <input
-              class="popup__item popup__item_el_profession"
-              type="text"
-              name="profession"
-              value="Исследователь океана"
-              placeholder="Чем вы занимаетесь?"
-            />
-            <button class="button button_type_save" type="submit">
-              Сохранить
-            </button>
+          <form name="popup" class="popup__form" novalidate>
+            <fieldset class="popup__set">
+              <label class="popup__field">
+                <input
+                  id="name-input"
+                  class="popup__item popup__item_el_name"
+                  type="text"
+                  name="firstname"
+                  value="Жак-Ив Кусто"
+                  placeholder="Ваше имя"
+                  minlength="2"
+                  maxlength="40"
+                  pattern="^[a-zA-Zа-яёА-ЯЁ\- ]+$"
+                  data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
+                  required
+                />
+                <span class="popup__item-error name-input-error"></span>
+              </label>
+              <label class="popup__field">
+                <input
+                  id="profession-input"
+                  class="popup__item popup__item_el_profession"
+                  type="text"
+                  name="profession"
+                  value="Исследователь океана"
+                  placeholder="Чем вы занимаетесь?"
+                  minlength="2"
+                  maxlength="200"
+                  pattern="^[a-zA-Zа-яёА-ЯЁ\- ]+$"
+                  data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
+                  required
+                />
+                <span class="popup__item-error profession-input-error"></span>
+              </label>
+              <button class="button button_type_save" type="submit">
+                Сохранить
+              </button>
+            </fieldset>
+          </form>
+        </div>
+      </section>
+
+      <section class="popup" id="popup-avatar">
+        <div class="popup__container">
+          <button class="button button_type_close" type="button"></button>
+          <h2 class="popup__heading popup__heading_el_position">
+            Обновить аватар
+          </h2>
+          <form name="popup" class="popup__form" novalidate>
+            <fieldset class="popup__set">
+              <label class="popup__field">
+                <input
+                  id="avatar-input"
+                  class="popup__item popup__item_el_avatar"
+                  type="url"
+                  name="url"
+                  value=""
+                  placeholder="Адрес изображения"
+                  required
+                />
+                <span class="popup__item-error avatar-input-error"></span>
+              </label>
+              <button
+                class="button button_type_save button_type_save_margin_less"
+                type="submit"
+              >
+                Сохранить
+              </button>
+            </fieldset>
           </form>
         </div>
       </section>
@@ -74,24 +127,40 @@
         <div class="popup__container">
           <button class="button button_type_close" type="button"></button>
           <h2 class="popup__heading">Добавить карточку</h2>
-          <form name="popup" class="popup__form">
-            <input
-              class="popup__item popup__item_el_name"
-              type="text"
-              name="title"
-              value=""
-              placeholder="Название места"
-            />
-            <input
-              class="popup__item popup__item_el_profession"
-              type="text"
-              name="address"
-              value=""
-              placeholder="Ссылка на картинку"
-            />
-            <button class="button button_type_save" type="submit">
-              Сохранить
-            </button>
+          <form name="popup" class="popup__form" novalidate>
+            <fieldset class="popup__set">
+              <label class="popup__field">
+                <input
+                  id="title-input"
+                  class="popup__item popup__item_el_name"
+                  type="text"
+                  name="title"
+                  minlength="2"
+                  maxlength="30"
+                  pattern="^[a-zA-Zа-яёА-ЯЁ\- ]+$"
+                  data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
+                  value=""
+                  placeholder="Название места"
+                  required
+                />
+                <span class="popup__item-error title-input-error"></span>
+              </label>
+              <label class="popup__field">
+                <input
+                  id="text-input"
+                  class="popup__item popup__item_el_profession"
+                  type="url"
+                  name="address"
+                  value=""
+                  placeholder="Ссылка на картинку"
+                  required
+                />
+                <span class="popup__item-error text-input-error"></span>
+              </label>
+              <button class="button button_type_save" type="submit">
+                Сохранить
+              </button>
+            </fieldset>
           </form>
         </div>
       </section>

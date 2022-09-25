@@ -6,3 +6,12 @@
     opacity: 1;
   }
 }
+
+@keyframes outcoming {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
