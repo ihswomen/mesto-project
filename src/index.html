@@ -13,12 +13,16 @@
     />
     <meta name="author" content="Nadegda Ikhsanova" />
     <title>Mesto</title>
-    <link rel="stylesheet" href="pages/index.css" />
   </head>
 
   <body class="page">
     <header class="header">
-      <img class="header__logo" src="./images/logo.svg" alt="Логотип Место" />
+      <img
+        class="header__logo"
+        src="<%=require('./images/logo.svg')%>"
+        alt="Логотип Место"
+        name="my avatar"
+      />
     </header>
 
     <main class="content">
@@ -27,7 +31,7 @@
           <div class="profile__avatar">
             <img
               class="profile__photo"
-              src="./images/avatar.jpg"
+              src="<%=require('./images/avatar.jpg')%>"
               alt="Жак-Ив Кусто"
             />
           </div>
@@ -191,6 +195,5 @@
     <footer class="footer">
       <p class="footer__paragraph">&copy; 2022 Mesto Russia</p>
     </footer>
-    <script src="./scripts/script.js"></script>
   </body>
 </html>
