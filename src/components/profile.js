@@ -1,3 +1,5 @@
+import { closePopup } from './modal.js'
+
 const popupProfileWindow = document.getElementById('popup-profile')
 const profile = document.querySelector('.profile')
 const name = profile.querySelector('.profile__name')
@@ -23,6 +25,20 @@ export const renderProfileData = () => {
     })
 }
 
+export const saveProfile = (nameValue, professionValue) => {
+  return fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me', {
+    method: 'PATCH',
+    headers: {
+      authorization: 'bfe9fc91-7210-42ab-9043-e5db917b2ecc',
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: nameValue,
+      about: professionValue,
+    }),
+  })
+}
+
 const addDataToProfile = (nameValue, professionValue, urlLink) => {
   name.textContent = nameValue
   profession.textContent = professionValue
@@ -31,8 +47,8 @@ const addDataToProfile = (nameValue, professionValue, urlLink) => {
 
 // Изменение полей и сохранение полей popup
 export function editProfileFields(nameValue, professionValue) {
-  name.textContent = nameValue
-  profession.textContent = professionValue
+  saveProfile(nameValue, professionValue)
+  renderProfileData()
   closePopup(popupProfileWindow)
 }
 
