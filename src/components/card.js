@@ -7,6 +7,20 @@ export const popupCardImage = document.getElementById('popup-image')
 const caption = popupCardImage.querySelector('.popup__caption')
 const imgSrc = popupCardImage.querySelector('.popup__picture')
 
+export const postNewCard = (placeValue, imageSrcValue) => {
+  return fetch('https://nomoreparties.co/v1/plus-cohort-15/cards', {
+    method: 'POST',
+    headers: {
+      authorization: 'bfe9fc91-7210-42ab-9043-e5db917b2ecc',
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: placeValue,
+      link: imageSrcValue,
+    }),
+  })
+}
+
 // Добавление новой карточки вместе с привязкой событий на кнопки like и delete
 export function addNewCard(placeValue, imageSrcValue) {
   const cardElement = createCard(placeValue, imageSrcValue)

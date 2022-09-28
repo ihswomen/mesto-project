@@ -1,7 +1,7 @@
 import './pages/index.css'
 import enableValidation from './components/validate.js'
 import { renderData } from './components/data.js'
-import { addNewCard, popupCardWindow } from './components/card.js'
+import { popupCardWindow, postNewCard } from './components/card.js'
 import { openPopup, closePopup } from './components/modal.js'
 import {
   editAvatarPicture,
@@ -96,7 +96,8 @@ popupAvatar.addEventListener('submit', (evt) => {
 // Добавляем новую карточку нажатием на кнопку "Сохранить" в popup
 cardForm.addEventListener('submit', function (evt) {
   evt.preventDefault()
-  addNewCard(placeValue.value, imageSrcValue.value)
+  postNewCard(placeValue.value, imageSrcValue.value)
+  renderData()
   evt.target.reset()
   closePopup(popupCardWindow)
 })
