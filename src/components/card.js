@@ -1,4 +1,4 @@
-import { openPopup } from './modal.js'
+import { openImagePopup } from './modal.js'
 
 const popupCardWindow = document.getElementById('popup-card')
 const cardTemplate = document.querySelector('#card').content
@@ -19,6 +19,15 @@ export const postNewCard = (placeValue, imageSrcValue) => {
       link: imageSrcValue,
     }),
   })
+    .then((res) => {
+      return res.json()
+    })
+    .then((data) => {
+      addNewCard(data.name, data.link)
+    })
+    .catch((error) => {
+      console.error('Error', error)
+    })
 }
 
 // Добавление новой карточки вместе с привязкой событий на кнопки like и delete
@@ -37,7 +46,7 @@ function createCard(placeValue, imageSrcValue) {
   cardImage.src = imageSrcValue
   cardImage.alt = placeValue
   cardImage.addEventListener('click', () => {
-    openPopup(popupCardImage)
+    openImagePopup(popupCardImage)
     showImagePopup(imageSrcValue, placeValue, placeValue)
   })
   newCard

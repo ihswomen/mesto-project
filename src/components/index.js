@@ -1,8 +1,8 @@
-import './pages/index.css'
-import enableValidation from './components/validate.js'
-import { renderData } from './components/data.js'
-import { popupCardWindow, postNewCard } from './components/card.js'
-import { openPopup, closePopup } from './components/modal.js'
+import '../pages/index.css'
+import { enableValidation } from './validate.js'
+import { renderData } from './data.js'
+import { popupCardWindow, postNewCard } from './card.js'
+import { openPopup, closePopup } from './modal.js'
 import {
   editAvatarPicture,
   editProfileFields,
@@ -10,7 +10,7 @@ import {
   profile,
   popupAvatar,
   renderProfileData,
-} from './components/profile.js'
+} from './profile.js'
 
 // Селекторы для формы аватара
 const avatarForm = popupAvatar.querySelector('.popup__form')
@@ -36,27 +36,18 @@ const cardForm = popupCardWindow.querySelector('.popup__form')
 const addCardButton = document.querySelector('.button_type_add')
 const closeButtons = document.querySelectorAll('.button_type_close')
 const editButton = document.querySelector('.button_type_edit')
-
-// renderInitialCards(initialCards, addNewCard)
-renderData()
-renderProfileData()
-
-enableValidation({
+const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__item',
   submitButtonSelector: '.button_type_save',
   inactiveButtonClass: 'button_type_save_inactive',
   inputErrorClass: 'popup__item_type_error',
   errorClass: 'popup__item-error_active',
-})
+}
 
-// Закрытие любого popup по нажатию клавиши escape
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
-    const popup = document.querySelector('.popup_opened')
-    closePopup(popup)
-  }
-})
+renderData()
+renderProfileData()
+enableValidation(validationConfig)
 
 // Реализация закрытия любого popup по кнопке button
 closeButtons.forEach((button) => {
@@ -68,17 +59,17 @@ closeButtons.forEach((button) => {
 
 // Открытие popup для редактирования данных профиля
 editButton.addEventListener('click', () => {
-  openPopup(popupProfileWindow)
+  openPopup(popupProfileWindow, validationConfig)
 })
 
 // Открытие popup для редкатирования данных профиля
 addCardButton.addEventListener('click', () => {
-  openPopup(popupCardWindow)
+  openPopup(popupCardWindow, validationConfig)
 })
 
 // Открытие popup для измненения аватарки
 avatar.addEventListener('click', () => {
-  openPopup(popupAvatar)
+  openPopup(popupAvatar, validationConfig)
 })
 
 // Добавляем событие на кнопку "Сохранить" в popup
@@ -97,7 +88,6 @@ popupAvatar.addEventListener('submit', (evt) => {
 cardForm.addEventListener('submit', function (evt) {
   evt.preventDefault()
   postNewCard(placeValue.value, imageSrcValue.value)
-  renderData()
   evt.target.reset()
   closePopup(popupCardWindow)
 })

@@ -67,10 +67,21 @@ function toggleButtonState(inputList, buttonElement, obj) {
   }
 }
 
-// Функция для добавления обработчиков всем формам
-export default function enableValidation(obj) {
-  const formList = Array.from(document.querySelectorAll(obj['formSelector']))
+// Функция для удаления ошибок с форм при закрытии popup
+export function resetError(formElement, obj) {
+  const inputList = Array.from(
+    formElement.querySelectorAll(obj['inputSelector'])
+  )
+  inputList.forEach((inputElement) =>
+    hideInputError(formElement, inputElement, obj)
+  )
+  const buttonElement = formElement.querySelector(obj['submitButtonSelector'])
+  toggleButtonState(inputList, buttonElement, obj)
+}
 
+// Функция для добавления обработчиков всем формам
+export function enableValidation(obj) {
+  const formList = Array.from(document.querySelectorAll(obj['formSelector']))
   formList.forEach((formElement) => {
     setEventListener(formElement, obj)
   })
