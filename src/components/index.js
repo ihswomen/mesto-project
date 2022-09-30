@@ -1,8 +1,8 @@
 import '../pages/index.css'
-import { enableValidation } from './validate.js'
+import { enableValidation, resetError } from './validate.js'
 import { renderData } from './data.js'
 import { popupCardWindow, postNewCard } from './card.js'
-import { openPopup, closePopup } from './modal.js'
+import { openPopup, closePopup, closePopupByClickOutside } from './modal.js'
 import {
   editAvatarPicture,
   editProfileFields,
@@ -12,6 +12,8 @@ import {
   renderProfileData,
 } from './profile.js'
 
+// Селектор для всех popup
+const popupList = document.querySelectorAll('.popup')
 // Селекторы для формы аватара
 const avatarForm = popupAvatar.querySelector('.popup__form')
 const urlLink = avatarForm.querySelector('.popup__item_el_avatar')
@@ -49,6 +51,11 @@ renderData()
 renderProfileData()
 enableValidation(validationConfig)
 
+// Добавляем слушатель на каждый popup для закрытия при клике на overlay
+popupList.forEach((popup) => {
+  popup.addEventListener('mousedown', closePopupByClickOutside)
+})
+
 // Реализация закрытия любого popup по кнопке button
 closeButtons.forEach((button) => {
   const popupMain = button.closest('.popup')
@@ -59,16 +66,19 @@ closeButtons.forEach((button) => {
 
 // Открытие popup для редактирования данных профиля
 editButton.addEventListener('click', () => {
+  resetError(popupProfileWindow, validationConfig)
   openPopup(popupProfileWindow, validationConfig)
 })
 
 // Открытие popup для редкатирования данных профиля
 addCardButton.addEventListener('click', () => {
+  resetError(popupCardWindow, validationConfig)
   openPopup(popupCardWindow, validationConfig)
 })
 
 // Открытие popup для измненения аватарки
 avatar.addEventListener('click', () => {
+  resetError(popupAvatar, validationConfig)
   openPopup(popupAvatar, validationConfig)
 })
 
