@@ -1,4 +1,4 @@
-import { openImagePopup } from './modal.js'
+import { openPopup } from './modal.js'
 
 const popupCardWindow = document.getElementById('popup-card')
 const cardTemplate = document.querySelector('#card').content
@@ -46,7 +46,7 @@ function createCard(placeValue, imageSrcValue) {
   cardImage.src = imageSrcValue
   cardImage.alt = placeValue
   cardImage.addEventListener('click', () => {
-    openImagePopup(popupCardImage)
+    openPopup(popupCardImage)
     showImagePopup(imageSrcValue, placeValue, placeValue)
   })
   newCard
