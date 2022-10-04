@@ -6,7 +6,9 @@
 @import url(../blocks/button/_type/button_type_edit.css);
 @import url(../blocks/button/_type/button_type_add.css);
 @import url(../blocks/button/_type/button_type_close.css);
+@import url(../blocks/button/_type/button_type_agree.css);
 @import url(../blocks/button/_position/button_position_closer.css);
+@import url(../blocks/button/_position/button_position_dif.css);
 @import url(../blocks/button/_type/button_type_save.css);
 @import url(../blocks/button/_inactive/button_type_save_inactive.css);
 @import url(../blocks/button/_margin/button_type_save_margin_less.css);
@@ -24,11 +26,14 @@
 @import url(../blocks/elements/__list/elements__list.css);
 @import url(../blocks/elements/__element/elements__element.css);
 @import url(../blocks/elements/__image/elements__image.css);
+@import url(../blocks/elements/__react/elements__react.css);
 @import url(../blocks/elements/__mask/elements__mask.css);
 @import url(../blocks/elements/__like/elements__like.css);
+@import url(../blocks/elements/__number/elements__number.css);
 @import url(../blocks/elements/__like/_active/elements__like_active.css);
 @import url(../blocks/elements/__text/elements__text.css);
 @import url(../blocks/elements/__delete/elements__delete.css);
+@import url(../blocks/elements/__delete/_show/elements__delete_show_remove.css);
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/forthcoming/forthcoming.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
@@ -38,6 +43,7 @@
 @import url(../blocks/popup/__field/popup__field.css);
 @import url(../blocks/popup/__heading/popup__heading.css);
 @import url(../blocks/popup/__heading/_el/popup__heading_el_position.css);
+@import url(../blocks/popup/__heading/_margin/popup__heading_margin_dif.css);
 @import url(../blocks/popup/__item/popup__item.css);
 @import url(../blocks/popup/__item/_el/popup__item_el_name.css);
 @import url(../blocks/popup/__item-error/popup__item-error.css);
