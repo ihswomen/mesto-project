@@ -13,4 +13,4 @@
 - Responsive Design
 - JavaScript
 
-[Ссылка на проект](https://ihswomen.github.io/mesto-project/index)
+[Ссылка на проект](https://ihswomen.github.io/mesto-project/)
