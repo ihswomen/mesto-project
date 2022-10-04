@@ -12,5 +12,6 @@
 - Grid
 - Responsive Design
 - JavaScript
+- API
 
 [Ссылка на проект](https://ihswomen.github.io/mesto-project/)

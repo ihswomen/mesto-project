@@ -18,6 +18,7 @@ export function closePopupEsc(evt) {
   }
 }
 
+// Функция закрытия любого popup по клику вне его
 export function closePopupByClickOutside(evt) {
   if (evt.target.classList.contains('popup_opened')) {
     const openedPopup = document.querySelector('.popup_opened')

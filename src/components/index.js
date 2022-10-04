@@ -1,7 +1,7 @@
 import '../pages/index.css'
 import { enableValidation, resetError } from './validate.js'
-import { renderData } from './data.js'
-import { popupCardWindow, postNewCard } from './card.js'
+import { renderData, postNewCard, renderProfileData } from './api.js'
+import { popupCardWindow } from './card.js'
 import { openPopup, closePopup, closePopupByClickOutside } from './modal.js'
 import {
   editAvatarPicture,
@@ -9,7 +9,8 @@ import {
   popupProfileWindow,
   profile,
   popupAvatar,
-  renderProfileData,
+  profession,
+  name,
 } from './profile.js'
 
 // Селектор для всех popup
@@ -21,8 +22,6 @@ const urlLink = avatarForm.querySelector('.popup__item_el_avatar')
 const profileForm = popupProfileWindow.querySelector('.popup__form')
 const inputName = profileForm.querySelector('.popup__item_el_name')
 const avatar = profile.querySelector('.profile__avatar')
-
-// const inputName = popupProfileWindow.querySelector(".popup__item_el_name");
 const inputProfession = popupProfileWindow.querySelector(
   '.popup__item_el_profession'
 )
@@ -37,6 +36,7 @@ const cardForm = popupCardWindow.querySelector('.popup__form')
 // Селекторы кнопок
 const addCardButton = document.querySelector('.button_type_add')
 const closeButtons = document.querySelectorAll('.button_type_close')
+
 const editButton = document.querySelector('.button_type_edit')
 const validationConfig = {
   formSelector: '.popup__form',
@@ -66,6 +66,8 @@ closeButtons.forEach((button) => {
 
 // Открытие popup для редактирования данных профиля
 editButton.addEventListener('click', () => {
+  document.getElementById('name-input').value = name.textContent
+  document.getElementById('profession-input').value = profession.textContent
   resetError(popupProfileWindow, validationConfig)
   openPopup(popupProfileWindow, validationConfig)
 })

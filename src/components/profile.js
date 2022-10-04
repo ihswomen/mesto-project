@@ -1,4 +1,10 @@
 import { closePopup } from './modal.js'
+import {
+  saveProfile,
+  renderProfileData,
+  saveAvatar,
+  saveButton,
+} from './api.js'
 
 const popupProfileWindow = document.getElementById('popup-profile')
 const profile = document.querySelector('.profile')
@@ -6,56 +12,34 @@ const name = profile.querySelector('.profile__name')
 const profession = profile.querySelector('.profile__profession')
 const photo = profile.querySelector('.profile__photo')
 const popupAvatar = document.getElementById('popup-avatar')
+let profileId = ''
 
-export const renderProfileData = () => {
-  return fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me', {
-    headers: {
-      authorization: 'bfe9fc91-7210-42ab-9043-e5db917b2ecc',
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-
-      return Promise.reject(res.status)
-    })
-    .then((res) => {
-      addDataToProfile(res.name, res.about, res.avatar)
-    })
-}
-
-export const saveProfile = (nameValue, professionValue) => {
-  return fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me', {
-    method: 'PATCH',
-    headers: {
-      authorization: 'bfe9fc91-7210-42ab-9043-e5db917b2ecc',
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify({
-      name: nameValue,
-      about: professionValue,
-    }),
-  })
-}
-
-const addDataToProfile = (nameValue, professionValue, urlLink) => {
+// Добавляем данные в профайл
+export const addDataToProfile = (
+  nameValue,
+  professionValue,
+  urlLink,
+  owner
+) => {
   name.textContent = nameValue
   profession.textContent = professionValue
   photo.src = urlLink
+  profileId = owner
 }
 
 // Изменение полей и сохранение полей popup
 export function editProfileFields(nameValue, professionValue) {
   saveProfile(nameValue, professionValue)
-  renderProfileData()
-  closePopup(popupProfileWindow)
+  renderProfileData().then(() => {
+    closePopup(popupProfileWindow)
+  })
 }
 
 // Изменение аватарки
 export function editAvatarPicture(urlLink) {
+  saveAvatar(urlLink)
   photo.src = urlLink
   closePopup(popupAvatar)
 }
 
-export { popupProfileWindow, profile, popupAvatar }
+export { popupProfileWindow, profile, popupAvatar, profileId, name, profession }
