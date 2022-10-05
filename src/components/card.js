@@ -2,11 +2,11 @@ import { closePopup, openPopup } from './modal.js'
 import { profileId } from './profile.js'
 import { deleteMyCard, cardLikeAdd, cardLikeRemove } from './api.js'
 
-const popupCardWindow = document.getElementById('popup-card')
-const popupQuestion = document.getElementById('popup-agree')
+const popupCardWindow = document.querySelector('#popup-card')
+const popupQuestion = document.querySelector('#popup-agree')
 const cardTemplate = document.querySelector('#card').content
 const cardList = document.querySelector('.elements__list')
-export const popupCardImage = document.getElementById('popup-image')
+export const popupCardImage = document.querySelector('#popup-image')
 const caption = popupCardImage.querySelector('.popup__caption')
 const imgSrc = popupCardImage.querySelector('.popup__picture')
 const agreeButton = document.querySelector('.button_type_agree')
@@ -29,7 +29,8 @@ function createCard(placeValue, imageSrcValue, likes, owner, cardId) {
     .querySelector('.elements__element')
     .cloneNode(true)
   const cardImage = newCard.querySelector('.elements__image')
-  const cardLikes = newCard.querySelector('.elements__number')
+  const cardLikesNumber = newCard.querySelector('.elements__number')
+  const cardLike = newCard.querySelector('.elements__like')
   newCard.querySelector('.elements__text').textContent = placeValue
   newCard.id = cardId
   cardImage.src = imageSrcValue
@@ -38,16 +39,35 @@ function createCard(placeValue, imageSrcValue, likes, owner, cardId) {
     openPopup(popupCardImage)
     showImagePopup(imageSrcValue, placeValue, placeValue)
   })
-  cardLikes.textContent = likes.length ? likes.length : 0
+  cardLikesNumber.textContent = likes.length ? likes.length : 0
+
+  likes.forEach((like) => {
+    if (like._id == profileId) {
+      cardLike.classList.add('elements__like_active')
+    }
+  })
+
   newCard.querySelector('.elements__like').addEventListener('click', (evt) => {
     if (evt.target.classList.contains('elements__like_active')) {
       cardLikeRemove(evt)
-      cardLikes.textContent = likes.length
+        .then((data) => {
+          cardLikesNumber.textContent = data.likes.length
+          evt.target.classList.toggle('elements__like_active')
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     } else {
       cardLikeAdd(evt)
-      cardLikes.textContent = likes.length + 1
+        .then((data) => {
+          console.log(data.likes)
+          cardLikesNumber.textContent = data.likes.length
+          evt.target.classList.toggle('elements__like_active')
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
-    evt.target.classList.toggle('elements__like_active')
   })
   if (owner._id !== profileId) {
     newCard
@@ -60,8 +80,14 @@ function createCard(placeValue, imageSrcValue, likes, owner, cardId) {
       openPopup(popupQuestion)
       agreeButton.addEventListener('click', () => {
         deleteMyCard(evt)
-        newCard.remove()
-        closePopup(popupQuestion)
+          .then((data) => {
+            console.log(data)
+            newCard.remove()
+            closePopup(popupQuestion)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       })
     })
 

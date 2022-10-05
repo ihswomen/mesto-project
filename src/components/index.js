@@ -1,7 +1,7 @@
 import '../pages/index.css'
 import { enableValidation, resetError } from './validate.js'
 import { renderData, postNewCard, renderProfileData } from './api.js'
-import { popupCardWindow } from './card.js'
+import { addNewCard, popupCardWindow } from './card.js'
 import { openPopup, closePopup, closePopupByClickOutside } from './modal.js'
 import {
   editAvatarPicture,
@@ -11,7 +11,9 @@ import {
   popupAvatar,
   profession,
   name,
+  addDataToProfile,
 } from './profile.js'
+import { renderInitialCards } from './data'
 
 // Селектор для всех popup
 const popupList = document.querySelectorAll('.popup')
@@ -35,9 +37,9 @@ const cardForm = popupCardWindow.querySelector('.popup__form')
 
 // Селекторы кнопок
 const addCardButton = document.querySelector('.button_type_add')
-const closeButtons = document.querySelectorAll('.button_type_close')
-
 const editButton = document.querySelector('.button_type_edit')
+
+// Конфиг для валидации
 const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__item',
@@ -47,27 +49,42 @@ const validationConfig = {
   errorClass: 'popup__item-error_active',
 }
 
+// Первоначальная загрузка данных с сервера
 renderData()
+  .then((res) => {
+    renderInitialCards(res.reverse(), addNewCard)
+  })
+  .catch((error) => {
+    console.log(error.message)
+  })
+
+// Загрузка данных профиля с сервера
 renderProfileData()
+  .then((res) => {
+    addDataToProfile(res.name, res.about, res.avatar, res._id)
+  })
+  .catch((error) => {
+    console.log(error.message)
+  })
+
 enableValidation(validationConfig)
 
-// Добавляем слушатель на каждый popup для закрытия при клике на overlay
+// Добавляем слушатель на каждый popup для закрытия при клике на overlay и по кнопке button
 popupList.forEach((popup) => {
-  popup.addEventListener('mousedown', closePopupByClickOutside)
-})
-
-// Реализация закрытия любого popup по кнопке button
-closeButtons.forEach((button) => {
-  const popupMain = button.closest('.popup')
-  button.addEventListener('click', function () {
-    closePopup(popupMain)
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopupByClickOutside(evt)
+    }
+    if (evt.target.classList.contains('button_type_close')) {
+      closePopup(popup)
+    }
   })
 })
 
 // Открытие popup для редактирования данных профиля
 editButton.addEventListener('click', () => {
-  document.getElementById('name-input').value = name.textContent
-  document.getElementById('profession-input').value = profession.textContent
+  inputName.value = name.textContent
+  inputProfession.value = profession.textContent
   resetError(popupProfileWindow, validationConfig)
   openPopup(popupProfileWindow, validationConfig)
 })
@@ -100,6 +117,19 @@ popupAvatar.addEventListener('submit', (evt) => {
 cardForm.addEventListener('submit', function (evt) {
   evt.preventDefault()
   postNewCard(placeValue.value, imageSrcValue.value)
+    .then((data) => {
+      addNewCard(data.name, data.link, data.likes, data.owner)
+      renderData()
+        .then((res) => {
+          renderInitialCards(res.reverse(), addNewCard)
+        })
+        .catch((error) => {
+          console.log(error.message)
+        })
+    })
+    .catch((error) => {
+      console.error('Error', error)
+    })
   evt.target.reset()
   closePopup(popupCardWindow)
 })
