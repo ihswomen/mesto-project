@@ -1,8 +1,3 @@
-import { addNewCard } from './card.js'
-import { renderInitialCards } from './data.js'
-import { addDataToProfile } from './profile.js'
-export const saveButton = document.querySelector('.button_type_save')
-
 // Базовая конфигурация запроса
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-15',
@@ -12,23 +7,18 @@ const config = {
   },
 }
 
+function checkResponse(res) {
+  if (res.ok) {
+    return res.json()
+  }
+  return Promise.reject(`Ошибка ${res.status}`)
+}
+
 // Начальная загрузка данных с сервера
 export const renderData = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка ${res.status}`)
-    })
-    .then((res) => {
-      renderInitialCards(res.reverse(), addNewCard)
-    })
-    .catch((error) => {
-      console.log(error.message)
-    })
+  }).then(checkResponse)
 }
 
 // Публикация новой карточки
@@ -41,42 +31,14 @@ export const postNewCard = (placeValue, imageSrcValue) => {
       link: imageSrcValue,
       likes: [],
     }),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка ${res.status}`)
-    })
-    .then((data) => {
-      addNewCard(data.name, data.link, data.likes, data.owner)
-      renderData()
-    })
-    .catch((error) => {
-      console.error('Error', error)
-    })
+  }).then(checkResponse)
 }
 
 // Получаем данные профиля с сервера
 export const renderProfileData = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(res.status)
-    })
-    .then((res) => {
-      addDataToProfile(res.name, res.about, res.avatar, res._id)
-    })
-    .catch((error) => {
-      console.log(error.message)
-    })
-    .finally(() => {
-      saveButton.textContent = 'Сохранить'
-    })
+  }).then(checkResponse)
 }
 
 // Сохраняем измененные данные профиля на сервер
@@ -88,20 +50,7 @@ export const saveProfile = (nameValue, professionValue) => {
       name: nameValue,
       about: professionValue,
     }),
-  })
-    .then((res) => {
-      if (res.ok) {
-        saveButton.textContent = 'Сохранение...'
-        return res.json()
-      }
-      return Promise.reject(`Ошибка ${res.status}`)
-    })
-    .then((data) => {
-      renderProfileData()
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+  }).then(checkResponse)
 }
 
 // Сохраняем новый аватар на сервер
@@ -112,19 +61,7 @@ export const saveAvatar = (newAvatar) => {
     body: JSON.stringify({
       avatar: newAvatar,
     }),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка ${res.status}`)
-    })
-    .then((data) => {
-      console.log(data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+  }).then(checkResponse)
 }
 
 // Удаляем свою карточку с сервера
@@ -135,19 +72,7 @@ export const deleteMyCard = (evt) => {
       method: 'DELETE',
       headers: config.headers,
     }
-  )
-    .then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка ${res.status}`)
-    })
-    .then((data) => {
-      console.log(data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+  ).then(checkResponse)
 }
 
 // Сохраняем лайк карточки на сервер
@@ -156,19 +81,7 @@ export const cardLikeAdd = (evt) => {
   return fetch(`${config.baseUrl}/cards/likes/${card.id}`, {
     method: 'PUT',
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка ${res.status}`)
-    })
-    .then((data) => {
-      console.log(data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+  }).then(checkResponse)
 }
 
 // Удаляем лайк карточки с сервера
@@ -177,17 +90,5 @@ export const cardLikeRemove = (evt) => {
   return fetch(`${config.baseUrl}/cards/likes/${card.id}`, {
     method: 'DELETE',
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка ${res.status}`)
-    })
-    .then((data) => {
-      console.log(data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+  }).then(checkResponse)
 }
