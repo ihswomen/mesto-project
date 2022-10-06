@@ -1,7 +1,12 @@
 import '../pages/index.css'
 import { enableValidation, resetError } from './validate.js'
-import { renderData, postNewCard, renderProfileData } from './api.js'
-import { addNewCard, popupCardWindow } from './card.js'
+import {
+  renderData,
+  postNewCard,
+  renderProfileData,
+  deleteMyCard,
+} from './api.js'
+import { addNewCard, popupCardWindow, cardIdForDelete } from './card.js'
 import { openPopup, closePopup, closePopupByClickOutside } from './modal.js'
 import {
   editAvatarPicture,
@@ -34,10 +39,12 @@ const imageSrcValue = popupCardWindow.querySelector(
   '.popup__item_el_profession'
 )
 const cardForm = popupCardWindow.querySelector('.popup__form')
+const popupQuestion = document.querySelector('#popup-agree')
 
 // Селекторы кнопок
 const addCardButton = document.querySelector('.button_type_add')
 const editButton = document.querySelector('.button_type_edit')
+const agreeButton = document.querySelector('.button_type_agree')
 
 // Конфиг для валидации
 const validationConfig = {
@@ -50,18 +57,15 @@ const validationConfig = {
 }
 
 // Первоначальная загрузка данных с сервера
-renderData()
-  .then((res) => {
-    renderInitialCards(res.reverse(), addNewCard)
-  })
-  .catch((error) => {
-    console.log(error.message)
-  })
-
-// Загрузка данных профиля с сервера
-renderProfileData()
-  .then((res) => {
-    addDataToProfile(res.name, res.about, res.avatar, res._id)
+Promise.all([renderData(), renderProfileData()])
+  .then(([cards, userData]) => {
+    renderInitialCards(cards.reverse(), addNewCard)
+    addDataToProfile(
+      userData.name,
+      userData.about,
+      userData.avatar,
+      userData._id
+    )
   })
   .catch((error) => {
     console.log(error.message)
@@ -118,18 +122,23 @@ cardForm.addEventListener('submit', function (evt) {
   evt.preventDefault()
   postNewCard(placeValue.value, imageSrcValue.value)
     .then((data) => {
-      addNewCard(data.name, data.link, data.likes, data.owner)
-      renderData()
-        .then((res) => {
-          renderInitialCards(res.reverse(), addNewCard)
-        })
-        .catch((error) => {
-          console.log(error.message)
-        })
+      addNewCard(data.name, data.link, data.likes, data.owner, data._id)
     })
     .catch((error) => {
       console.error('Error', error)
     })
   evt.target.reset()
   closePopup(popupCardWindow)
+})
+
+// Слушатель на кнопку согласия на удаление карточки
+agreeButton.addEventListener('click', () => {
+  deleteMyCard(cardIdForDelete)
+    .then((data) => {
+      cardIdForDelete.target.parentElement.remove()
+      closePopup(popupQuestion)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 })

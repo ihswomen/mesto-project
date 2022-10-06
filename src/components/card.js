@@ -1,15 +1,15 @@
-import { closePopup, openPopup } from './modal.js'
+import { openPopup } from './modal.js'
 import { profileId } from './profile.js'
-import { deleteMyCard, cardLikeAdd, cardLikeRemove } from './api.js'
+import { cardLikeAdd, cardLikeRemove } from './api.js'
 
 const popupCardWindow = document.querySelector('#popup-card')
-const popupQuestion = document.querySelector('#popup-agree')
 const cardTemplate = document.querySelector('#card').content
 const cardList = document.querySelector('.elements__list')
 export const popupCardImage = document.querySelector('#popup-image')
 const caption = popupCardImage.querySelector('.popup__caption')
 const imgSrc = popupCardImage.querySelector('.popup__picture')
-const agreeButton = document.querySelector('.button_type_agree')
+const popupQuestion = document.querySelector('#popup-agree')
+export let cardIdForDelete = ''
 
 // Добавление новой карточки вместе с привязкой событий на кнопки like и delete
 export function addNewCard(placeValue, imageSrcValue, likes, owner, cardId) {
@@ -22,7 +22,6 @@ export function addNewCard(placeValue, imageSrcValue, likes, owner, cardId) {
   )
   cardList.insertAdjacentElement('afterbegin', cardElement)
 }
-
 // Функция создания карточки
 function createCard(placeValue, imageSrcValue, likes, owner, cardId) {
   const newCard = cardTemplate
@@ -40,7 +39,6 @@ function createCard(placeValue, imageSrcValue, likes, owner, cardId) {
     showImagePopup(imageSrcValue, placeValue, placeValue)
   })
   cardLikesNumber.textContent = likes.length ? likes.length : 0
-
   likes.forEach((like) => {
     if (like._id == profileId) {
       cardLike.classList.add('elements__like_active')
@@ -60,7 +58,6 @@ function createCard(placeValue, imageSrcValue, likes, owner, cardId) {
     } else {
       cardLikeAdd(evt)
         .then((data) => {
-          console.log(data.likes)
           cardLikesNumber.textContent = data.likes.length
           evt.target.classList.toggle('elements__like_active')
         })
@@ -78,17 +75,7 @@ function createCard(placeValue, imageSrcValue, likes, owner, cardId) {
     .querySelector('.elements__delete')
     .addEventListener('click', (evt) => {
       openPopup(popupQuestion)
-      agreeButton.addEventListener('click', () => {
-        deleteMyCard(evt)
-          .then((data) => {
-            console.log(data)
-            newCard.remove()
-            closePopup(popupQuestion)
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      })
+      cardIdForDelete = evt
     })
 
   return newCard

@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 // Базовая конфигурация запроса
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-15',
@@ -27,6 +28,7 @@ export const postNewCard = (placeValue, imageSrcValue) => {
     method: 'POST',
     headers: config.headers,
     body: JSON.stringify({
+      _id: uuidv4(),
       name: placeValue,
       link: imageSrcValue,
       likes: [],

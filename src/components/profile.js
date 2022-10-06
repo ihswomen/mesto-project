@@ -10,17 +10,30 @@ const popupAvatar = document.getElementById('popup-avatar')
 const saveButton = document.querySelector('.button_type_save')
 let profileId = ''
 
+// Получаем id текущего пользователя
+renderProfileData()
+  .then((res) => {
+    return getProfileId(res._id)
+  })
+  .catch((error) => {
+    console.log(error.message)
+  })
+
+function getProfileId(userId) {
+  profileId = userId
+}
+
 // Добавляем данные в профайл
 export const addDataToProfile = (
   nameValue,
   professionValue,
   urlLink,
-  owner
+  userId
 ) => {
   name.textContent = nameValue
   profession.textContent = professionValue
   photo.src = urlLink
-  profileId = owner
+  userId = profileId
 }
 
 // Изменение полей и сохранение полей popup
