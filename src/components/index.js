@@ -123,19 +123,19 @@ cardForm.addEventListener('submit', function (evt) {
   postNewCard(placeValue.value, imageSrcValue.value)
     .then((data) => {
       addNewCard(data.name, data.link, data.likes, data.owner, data._id)
+      closePopup(popupCardWindow)
+      evt.target.reset()
     })
     .catch((error) => {
       console.error('Error', error)
     })
-  evt.target.reset()
-  closePopup(popupCardWindow)
 })
 
 // Слушатель на кнопку согласия на удаление карточки
 agreeButton.addEventListener('click', () => {
   deleteMyCard(cardIdForDelete)
     .then((data) => {
-      cardIdForDelete.target.parentElement.remove()
+      cardIdForDelete.target.closest('.elements__element').remove()
       closePopup(popupQuestion)
     })
     .catch((error) => {
